@@ -60,11 +60,11 @@ set shiftwidth=2
 set tabstop=2
 set expandtab
 
-# tabs open/move
+" tabs open/move
 map <F10> :tabe<CR>
 map <F7> :tabp<CR>
 map <F8> :tabn<CR>
 
-# save/load sessions
+" save/load sessions
 map <F11> :mksession ./cs.vim<CR>
 map <F12> :source ./cs.vim<CR>
