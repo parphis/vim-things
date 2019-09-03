@@ -68,3 +68,5 @@ map <F8> :tabn<CR>
 " save/load sessions
 map <F11> :mksession ./cs.vim<CR>
 map <F12> :source ./cs.vim<CR>
+
+au BufNewFile *.html 0r ~/.vim/html.skel | let IndentStyle = "html"
