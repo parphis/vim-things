@@ -70,3 +70,8 @@ map <F11> :mksession ./cs.vim<CR>
 map <F12> :source ./cs.vim<CR>
 
 au BufNewFile *.html 0r ~/.vim/html.skel | let IndentStyle = "html"
+
+highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
