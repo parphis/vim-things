@@ -29,12 +29,17 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
+" Twig
+Plugin 'nelsyeung/twig.vim'
+
 " Python autocomplete
 Plugin 'davidhalter/jedi-vim'
 
 " Markdown, https://github.com/plasticboy/vim-markdown
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
+
+Plugin 'alvan/vim-closetag'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -121,7 +126,7 @@ inoremap <F7> <esc>:tabp<CR>
 inoremap <F8> <esc>:tabn<CR>
 
 " save/load sessions
-map <F11> :mksession ./cs.vim<CR>
+" map <F11> :mksession ./cs.vim<CR>
 map <F5> :source ./cs.vim<CR>
 
 au BufNewFile *.html 0r ~/.vim/html.skel | let IndentStyle = "html"
