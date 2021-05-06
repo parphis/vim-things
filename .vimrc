@@ -113,7 +113,7 @@ map <c-a> :wa<CR>
 inoremap <F12> <esc>:wqa<CR>
 map <F12> :wqa<CR>
 
-" save all buffer and quit
+" quit without save
 inoremap <c-q> <esc>:qa!<CR>
 map <c-q> :qa!<CR>
 
@@ -126,7 +126,7 @@ inoremap <F7> <esc>:tabp<CR>
 inoremap <F8> <esc>:tabn<CR>
 
 " save/load sessions
-" map <F11> :mksession ./cs.vim<CR>
+map <F11> :mksession ./cs.vim<CR>
 map <F5> :source ./cs.vim<CR>
 
 au BufNewFile *.html 0r ~/.vim/html.skel | let IndentStyle = "html"
