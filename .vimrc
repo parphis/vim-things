@@ -1,3 +1,15 @@
+function! GitBranch()
+  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+endfunction
+
+function! StatuslineGit()
+  let l:branchname = GitBranch()
+  return strlen(l:branchname) > 0 ? ' '.l:branchname.' ':'No Git branch - '
+endfunction
+
+let mapleader="-"
+let maplocalleader="--"
+
 " All system-wide defaults are set in $VIMRUNTIME/debian.vim (usually just
 " /usr/share/vim/vimcurrent/debian.vim) and sourced by the call to :runtime
 " you can find below.  If you wish to change any of those settings, you should
@@ -29,6 +41,8 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
+Bundle 'farseer90718/vim-taskwarrior'
+
 " Twig
 Plugin 'nelsyeung/twig.vim'
 
@@ -55,6 +69,57 @@ filetype plugin on
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+
+" Pretty format XML documents
+com! FormatXML :%!python3 -c "import xml.dom.minidom, sys; print(xml.dom.minidom.parse(sys.stdin).toprettyxml())"
+" nnoremap <F2> :FormatXML<Cr>
+
+" status line things
+au InsertEnter * hi statusline guifg=#adadad guibg=#4e4e4e ctermfg=9 ctermbg=15
+au InsertLeave * hi statusline guifg=#303030 guibg=#303030 ctermfg=233 ctermbg=28
+hi statusline guifg=#adadad guibg=#4e4e4e ctermfg=233 ctermbg=28
+
+" Status line
+" default: set statusline=%f\ %h%w%m%r\ %=%(%l,%c%V\ %=\ %P%)
+
+" Status Line Custom
+let g:currentmode={
+    \ 'n'  : 'Normal',
+    \ 'no' : 'Normal·Operator Pending',
+    \ 'v'  : 'Visual',
+    \ 'V'  : 'V·Line',
+    \ '^V' : 'V·Block',
+    \ 's'  : 'Select',
+    \ 'S'  : 'S·Line',
+    \ '^S' : 'S·Block',
+    \ 'i'  : 'Insert',
+    \ 'R'  : 'Replace',
+    \ 'Rv' : 'V·Replace',
+    \ 'c'  : 'Command',
+    \ 'cv' : 'Vim Ex',
+    \ 'ce' : 'Ex',
+    \ 'r'  : 'Prompt',
+    \ 'rm' : 'More',
+    \ 'r?' : 'Confirm',
+    \ '!'  : 'Shell',
+    \ 't'  : 'Terminal'
+    \}
+
+set laststatus=2
+set noshowmode
+set statusline=
+set statusline+=%0*\ %n\                                 " Buffer number
+set statusline+=%1*\ %<%F%m%r%h%w\                       " File path, modified, readonly, helpfile, preview
+set statusline+=%=                                       " Right Side
+set statusline+=%1*\ %l:%v(%p%%\ %L)\                         " Colomn number
+set statusline+=%0*\ %{toupper(g:currentmode[mode()])}\  " The current mode
+set statusline+=%5*\ %{StatuslineGit()}
+
+hi User1 ctermfg=007 ctermbg=239 guibg=#4e4e4e guifg=#adadad
+hi User2 ctermfg=007 ctermbg=236 guibg=#303030 guifg=#adadad
+hi User3 ctermfg=236 ctermbg=236 guibg=#303030 guifg=#303030
+hi User4 ctermfg=239 ctermbg=239 guibg=#4e4e4e guifg=#4e4e4e
+hi User5 ctermfg=1 ctermbg=7 guibg=#ff0000 guifg=#ff0000
 
 " Vim5 and later versions support syntax highlighting. Uncommenting the next
 " line enables syntax highlighting by default.
@@ -103,32 +168,39 @@ set expandtab
 
 " save current buffer
 inoremap <c-s> <esc>:w<CR>
-map <c-s> :w<CR>
+noremap <c-s> :w<CR>
 
 " save all buffer
 inoremap <c-a> <esc>:wa<CR>
-map <c-a> :wa<CR>
+noremap <c-a> :wa<CR>
 
 " save all buffer and quit
 inoremap <F12> <esc>:wqa<CR>
-map <F12> :wqa<CR>
+noremap <F12> :wqa<CR>
 
-" quit without save
+" save all buffer and quit
 inoremap <c-q> <esc>:qa!<CR>
-map <c-q> :qa!<CR>
+noremap <c-q> :qa!<CR>
 
 " tabs open/move
-map <F10> :tabe<CR>
-map <F7> :tabp<CR>
-map <F8> :tabn<CR>
+noremap <F10> :tabe<CR>
+noremap <F7> :tabp<CR>
+noremap <F8> :tabn<CR>
 inoremap <F10> <esc>:tabe<CR>
 inoremap <F7> <esc>:tabp<CR>
 inoremap <F8> <esc>:tabn<CR>
 
-" save/load sessions
-map <F11> :mksession ./cs.vim<CR>
-map <F5> :source ./cs.vim<CR>
+" open vimrc
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 
+" source vimrc
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+" save/load sessions
+" map <F11> :mksession ./cs.vim<CR>
+noremap <F5> :source ./cs.vim<CR>
+
+" open an HTML template when opening HTML doc
 au BufNewFile *.html 0r ~/.vim/html.skel | let IndentStyle = "html"
 
 highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
