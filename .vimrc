@@ -27,6 +27,8 @@ let maplocalleader="--"
 " line enables syntax highlighting by default.
 syntax on
 
+packloadall
+
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
 set background=dark
@@ -83,32 +85,36 @@ noremap <F5> :source ./cs.vim<CR>
 
 "" Plugins
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+"set rtp+=~/.vim/bundle/Vundle.vim
+"call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+"Plugin 'VundleVim/Vundle.vim'
 
-Bundle 'farseer90718/vim-taskwarrior'
+"Bundle 'farseer90718/vim-taskwarrior'
 
 " Twig
-Plugin 'nelsyeung/twig.vim'
+"Plugin 'nelsyeung/twig.vim'
 
 " Python autocomplete
-Plugin 'davidhalter/jedi-vim'
+"Plugin 'davidhalter/jedi-vim'
 
 " Markdown, https://github.com/plasticboy/vim-markdown
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
+"Plugin 'godlygeek/tabular'
+"Plugin 'plasticboy/vim-markdown'
 
-Plugin 'alvan/vim-closetag'
+"Plugin 'alvan/vim-closetag'
 
 " All of your Plugins must be added before the following line
-call vundle#end()            " required
+"call vundle#end()            " required
 
-:autocmd BufRead * let b:git_branch_info = GitBranch()
+:autocmd BufNewFile,BufRead * let g:git_branch_info = GitBranch()
+
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 
 "" Status line things
 au InsertEnter * hi statusline guifg=#adadad guibg=#4e4e4e ctermfg=9 ctermbg=15
@@ -148,7 +154,7 @@ set laststatus=2
 set noshowmode
 set statusline=
 set statusline+=%0*\ %{toupper(g:currentmode[mode()])}\  " The current mode
-set statusline+=%1*\ %{b:git_branch_info}                " Git branch info
+set statusline+=%1*\ %{g:git_branch_info}                " Git branch info
 set statusline+=%2*\ %<%F%m%r%h%w\                       " File path, modified, readonly, helpfile, preview
 set statusline+=%=                                       " Right Side
 set statusline+=%1*\ %l:%v(%p%%\ %L)\                    " Colomn number
