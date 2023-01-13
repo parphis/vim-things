@@ -111,6 +111,7 @@ noremap <F5> :source ./cs.vim<CR>
 "call vundle#end()            " required
 
 :autocmd BufNewFile,BufRead * let g:git_branch_info = GitBranch()
+:autocmd BufEnter {} let g:git_branch_info = ''
 
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
