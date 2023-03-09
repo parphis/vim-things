@@ -16,7 +16,7 @@ set nocompatible              " be iMproved, required
 runtime! debian.vim
 
 function! GitBranch()
-  let l:branchname = trim(system("git -C . branch | grep '^[*][^*]' | sed -e 's/* //'"))
+  let l:branchname = trim(system("git -C . branch 2> /dev/null | grep '^[*][^*]' | sed -e 's/* //'"))
   return strlen(l:branchname) > 0 ? ' |'.l:branchname.'| ':'|- No Git -|'
 endfunction
 
