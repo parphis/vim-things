@@ -62,6 +62,7 @@ endif
 " Uncomment the following to have Vim load indentation rules and plugins
 " according to the detected filetype.
 if has("autocmd")
+  filetype plugin on
   filetype plugin indent on
 endif
 
@@ -120,9 +121,11 @@ augroup skeletons
     autocmd BufNewFile *.* silent! execute '0r ~/.vim/templates/skeleton.'.expand("<afile>:e")
 augroup END
 
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags shiftwidth=2 tabstop=2
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS shiftwidth=2 tabstop=2
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS shiftwidth=2 tabstop=2
+autocmd FileType typescript setlocal shiftwidth=2 tabstop=2
+autocmd FileType python setlocal shiftwidth=4 tabstop=4
 
 "" Status line things
 au InsertEnter * hi statusline guifg=#adadad guibg=#4e4e4e ctermfg=9 ctermbg=15
